@@ -87,7 +87,7 @@ namespace ADONET_Demo.Service
                 }
             }
         }
-        public static void GenericUserDelete(string DatabaseName, string TableName, string Condition)
+        public static void GenericDelete(string DatabaseName, string TableName, string Condition)
         {
             string connectionString = $"Server = DESKTOP-02F3BCI; Database = {DatabaseName}; Trusted_Connection = True;";
             using (SqlConnection connect = new SqlConnection(connectionString))
@@ -105,6 +105,29 @@ namespace ADONET_Demo.Service
                 else
                 {
                     Console.WriteLine("O'chirildi!");
+                }
+            }
+        }
+        public static void GenericCreate(string Name, int Age)
+        {
+            string connectionString = $"Server = DESKTOP-02F3BCI; Database = NonProject; Trusted_Connection = True;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = $"INSERT INTO Users (Name, Age) " +
+                               $"VALUES ('{Name}', {Age});";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+
+                int count = cmd.ExecuteNonQuery();
+                if (count != 0)
+                {
+                    Console.WriteLine("User qo'shildi!");
+                }
+                else
+                {
+                    Console.WriteLine("Qandaydir muammo yuz berdi!");
                 }
             }
         }
